@@ -1,5 +1,6 @@
-#include "BackgroundManager.h"
+﻿#include "BackgroundManager.h"
 #include <iostream>
+
 
 BackgroundManager::BackgroundManager(sf::RenderWindow& win)
     : window(win) {
@@ -7,23 +8,33 @@ BackgroundManager::BackgroundManager(sf::RenderWindow& win)
     fadeRect.setFillColor(sf::Color(0, 0, 0, 0));
 }
 
+
 void BackgroundManager::setBackground(const std::string& imagePath) {
+    
     if (texture.loadFromFile(imagePath)) {
         sprite.setTexture(texture);
+
         float windowWidth = static_cast<float>(window.getSize().x);
         float windowHeight = static_cast<float>(window.getSize().y);
         float textureWidth = static_cast<float>(texture.getSize().x);
         float textureHeight = static_cast<float>(texture.getSize().y);
 
-        float scale = std::max(windowWidth / textureWidth, windowHeight / textureHeight); // Fill entire window
+        // Maintain aspect ratio and fill the screen
+        float scaleX = windowWidth / textureWidth;
+        float scaleY = windowHeight / textureHeight;
+        float scale = std::max(scaleX, scaleY); // Cover entire window (may crop edges)
 
-        sprite.setTexture(texture);
         sprite.setScale(scale, scale);
 
-        // center the image if it's larger than the window
-        float offsetX = (textureWidth * scale - windowWidth) / 2.0f;
-        float offsetY = (textureHeight * scale - windowHeight) / 2.0f;
+        // Center the image
+        float scaledWidth = textureWidth * scale;
+        float scaledHeight = textureHeight * scale;
+
+        float offsetX = (scaledWidth - windowWidth) / 2.0f;
+        float offsetY = (scaledHeight - windowHeight) / 2.0f;
+
         sprite.setPosition(-offsetX, -offsetY);
+
         hasBackground = true;
         isHiddenFlag = false;
         currentBackgroundPath = imagePath;
@@ -33,8 +44,8 @@ void BackgroundManager::setBackground(const std::string& imagePath) {
         hasBackground = false;
         currentBackgroundPath = "";
     }
-    
 }
+//}
 
 void BackgroundManager::update(float deltaTime) {
     if (isFadingFlag) {

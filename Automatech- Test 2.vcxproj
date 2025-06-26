@@ -138,6 +138,7 @@
     <ClCompile Include="BackgroundManager.cpp" />
     <ClCompile Include="chapterManager.cpp" />
     <ClCompile Include="CharacterPortrait.cpp" />
+    <ClCompile Include="ChoiceBox.cpp" />
     <ClCompile Include="DialogueBox.cpp" />
     <ClCompile Include="LoadScreen.cpp" />
     <ClCompile Include="PlayIntro.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="BackgroundManager.h" />
     <ClInclude Include="chapterManager.h" />
     <ClInclude Include="CharacterPortrait.h" />
+    <ClInclude Include="ChoiceBox.h" />
     <ClInclude Include="DialogueBox.h" />
     <ClInclude Include="GameProgress.h" />
     <ClInclude Include="GameState.h" />

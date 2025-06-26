@@ -6,7 +6,7 @@ AboutScreen::AboutScreen(sf::RenderWindow& win, sf::Font& titleFnt, sf::Font& bo
     : window(win), titleFont(titleFnt), bodyFont(bodyFnt)
 {
     // Load the background texture from file
-    if (backgroundTexture.loadFromFile("simba.png")) {
+    if (backgroundTexture.loadFromFile("TitleSC.png")) {
         background.setTexture(backgroundTexture);
 
         // Scale the background to fill the window while keeping the aspect ratio

@@ -5,6 +5,7 @@
 #include <string>
 #include <queue>
 #include <vector>
+#include "SoundManager.h"
 
 struct DialogueEntry {
     std::string text;
@@ -15,7 +16,7 @@ struct DialogueEntry {
 
 class DialogueBox {
 public:
-    DialogueBox(sf::RenderWindow& window, sf::Font& font);
+    DialogueBox(sf::RenderWindow& window, sf::Font& bodyFont, SoundManager& soundManager);
 
     void startDialogue(const std::vector<DialogueEntry>& entries);
     void update();
@@ -27,8 +28,11 @@ public:
     void drawBackground();
 
     std::string getCurrentSpeaker() const;
+    std::string getCurrentDialogue() const;
+    bool wasBackPressed() const;
+    void resetBackPressed();
 
-    std::string getCurrentDialogue() const;  // New method
+    void blockAdvanceUntil(const std::string& soundName);
 
 private:
     void nextDialogue();
@@ -46,8 +50,8 @@ private:
     std::string speakerName;
     std::size_t currentCharIndex;
     sf::Clock typeClock;
-    sf::RectangleShape sidePanel; //New shape for the ICONS Needed to be place
-    sf::RectangleShape rightPanel; 
+    sf::RectangleShape sidePanel;
+    sf::RectangleShape rightPanel;
     bool visible;
     bool finishedTyping;
     float typeSpeed;
@@ -57,6 +61,21 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
     bool hasBackgroundImage = false;
+
+    sf::RectangleShape forwardButton;
+    sf::Text forwardText;
+    bool autoForwardEnabled;
+    sf::Clock advanceClock;
+
+    sf::RectangleShape backButton;
+    sf::Text backText;
+    bool backToTitleRequested = false;
+
+    bool backPressed;
+
+    std::string blockedSoundName;
+    SoundManager& soundManager; 
+    
 };
 
 #endif // DIALOGUEBOX_HPP
